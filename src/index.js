@@ -4,11 +4,11 @@ import ReactDOM from "react-dom";
 import App from "./components/App";
 import './index.css';
 import { gameWidth, gameHeight, roadPosition, playTime, speed, getRandomBlock, getRandomRoadIndex } from './utils';
-import bg_old from "./assets/background/bg_old.jpg";
-import player from "./assets/player/player.svg";
-import coinIcon from "./assets/coinIcon.svg";
-import logo from "./assets/logo.png";
-import start from "./assets/start.png";
+import bg_old from './assets/background/bg_old.jpg';
+import player from './assets/player/player.svg';
+import coinIcon from './assets/coinIcon.svg';
+import logo from './assets/logo.png';
+import start from './assets/start.png';
 import sky_old from './assets/background/sky_old.png';
 import cloud_old from './assets/background/cloud_old.png';
 import city from './assets/background/city.png';
@@ -25,7 +25,7 @@ import lighting from './assets/gameEnd/lighting.svg';
 import ribbon from './assets/gameEnd/ribbon.svg';
 import warning from './assets/gameEnd/warning.svg';
 import restart from './assets/restart.png';
-import gameOver from './assets/gameOver.svg';
+import gameOverImg from './assets/gameOver.svg';
 
 var coinCount = 0;
 

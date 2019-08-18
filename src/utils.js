@@ -1,7 +1,7 @@
 export const gameWidth = 1920;
 export const gameHeight = 1080;
 export const roadPosition = { gap: 140, min: 600, max: 880, x: 300 };
-export const playTime = 30;
+export const playTime = 90;
 export const speed = [4, 6, 8, 11];
 
 
