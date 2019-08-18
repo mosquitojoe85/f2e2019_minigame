@@ -1,8 +1,8 @@
 export const gameWidth = 1920;
 export const gameHeight = 1080;
 export const roadPosition = { gap: 140, min: 600, max: 880, x: 300 };
-export const playTime = 10;
-export const speed = [6];
+export const playTime = 30;
+export const speed = [4, 6, 8, 11];
 
 
 
@@ -20,7 +20,7 @@ export const getRandomBlock = () => blockType[getRandomInt(0, 7)];
 
 export const getRandomRoadIndex = (road = [0, 1, 2]) => {
   const randomRoadIndex = getRandomInt(0, road.length - 1);
-  return [randomRoadIndex, road.filter((el, i) => {
+  return [road[randomRoadIndex], road.filter((el, i) => {
     return i !== randomRoadIndex;
   })];
 };

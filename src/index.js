@@ -1,10 +1,31 @@
 import Phaser from "phaser";
-import logoImg from "./assets/logo.png";
 import React from "react";
 import ReactDOM from "react-dom";
 import App from "./components/App";
 import './index.css';
 import { gameWidth, gameHeight, roadPosition, playTime, speed, getRandomBlock, getRandomRoadIndex } from './utils';
+import bg_old from "./assets/background/bg_old.jpg";
+import player from "./assets/player/player.svg";
+import coinIcon from "./assets/coinIcon.svg";
+import logo from "./assets/logo.png";
+import start from "./assets/start.png";
+import sky_old from './assets/background/sky_old.png';
+import cloud_old from './assets/background/cloud_old.png';
+import city from './assets/background/city.png';
+import road from './assets/background/road.png';
+import coin from './assets/coin.svg';
+import stone from './assets/stone.svg';
+import mosquito from './assets/mosquito.svg';
+import flood from './assets/flood.svg';
+import boom from './assets/boom.svg';
+import bg_rich from './assets/background/bg_rich.jpg';
+import playerEnd from './assets/player/playerEnd.svg';
+import coins from './assets/gameEnd/coins.svg';
+import lighting from './assets/gameEnd/lighting.svg';
+import ribbon from './assets/gameEnd/ribbon.svg';
+import warning from './assets/gameEnd/warning.svg';
+import restart from './assets/restart.png';
+import gameOver from './assets/gameOver.svg';
 
 var coinCount = 0;
 
@@ -42,6 +63,8 @@ const playGame = {
       this.load.svg('player', 'src/assets/player/player.svg', { width: 280 });
       this.load.svg('coin', 'src/assets/coin.svg', { width: 280 });
       this.load.svg('stone', 'src/assets/stone.svg', { width: 280 });
+      this.load.svg('mosquito', 'src/assets/mosquito.svg', { width: 280 });
+      this.load.svg('flood', 'src/assets/flood.svg', { width: 280 });
       this.load.svg('boom', 'src/assets/boom.svg', { width: 130 });
       this.load.svg('coinIcon', 'src/assets/coinIcon.svg', { width: 100 });
     },
@@ -64,10 +87,10 @@ const playGame = {
             return;
           }
           const blockType = getRandomBlock();
-          let road = [0, 1, 2];
+          let current, road = [0, 1, 2];
 
           for(let el of blockType) {
-            const [current, road] = getRandomRoadIndex(road);
+            [current, road] = getRandomRoadIndex(road);
             if(el === 1) {
               const coin = this.physics.add.sprite(1940, roadPosition.min + roadPosition.gap * (current + 1), 'coin');
               coin.setName('coin');
@@ -78,14 +101,25 @@ const playGame = {
               });
             }
             if(el === 2) {
-              const stone = this.physics.add.sprite(1940, roadPosition.min + roadPosition.gap * (current + 1), 'stone');
-              stone.setName('stone');
-              this.blocks.push(stone);
-              this.physics.add.collider(this.player, stone, (player, stone) => {
+              let block;
+              if(this.playTimer < playTime * 1/3) {
+                block = this.physics.add.sprite(1940, roadPosition.min + roadPosition.gap * (current + 1), 'flood');
+                block.setSize(block.w, 80);
+                block.setName('flood');
+              }else if(this.playTimer < playTime * 2/3) {
+                block = this.physics.add.sprite(1940, roadPosition.min + roadPosition.gap * (current + 1), 'mosquito');
+                block.setSize(block.w, 80);
+                block.setName('mosquito');
+              }else {
+                block = this.physics.add.sprite(1940, roadPosition.min + roadPosition.gap * (current + 1), 'stone');
+                block.setName('stone');
+              }
+              this.blocks.push(block);
+              this.physics.add.collider(this.player, block, (player, el2) => {
                 this.boom = this.add.image(roadPosition.x + 50, this.player.y + 80, 'boom');
                 this.boom.setDepth(51);
                 this.scene.switch('gameOver');
-                stone.destroy();
+                el2.destroy();
               });
             }
           }
@@ -118,12 +152,15 @@ const playGame = {
     update: function(){
       this.sky.tilePositionX += 1;
       this.city.tilePositionX += 2;
-      this.road.tilePositionX += speed[0];
+      this.road.tilePositionX += speed[1];
       this.playTime.setText(`TIME: ${this.playTimer} s`);
       this.coinNum.setText(coinCount);
       for(let block of this.blocks) {
-        const newX = block.x -= speed[0];
-        block.setPosition(newX, block.y);
+        if(block.name === 'mosquito') {
+          block.setPosition(block.x -= speed[2], block.y);
+        }else if(block.name === 'flood') {
+          block.setPosition(block.x -= speed[3], block.y);
+        }else block.setPosition(block.x -= speed[1], block.y);
       }
     }
 }
@@ -131,7 +168,7 @@ const playGame = {
 const gameEnd = {
   key: 'gameEnd',
   preload: function(){
-    this.load.image('bg', 'src/assets/background/bg_rich.jpg');
+    this.load.image('bg_rich', 'src/assets/background/bg_rich.jpg');
     this.load.svg('endPlayer', 'src/assets/player/playerEnd.svg', { width: 290 });
     this.load.svg('coins', 'src/assets/gameEnd/coins.svg', { width: 600 });
     this.load.svg('lighting', 'src/assets/gameEnd/lighting.svg', { width: 290 });
@@ -141,7 +178,7 @@ const gameEnd = {
     this.load.svg('coinIcon', 'src/assets/coinIcon.svg', { width: 100 });
   },
   create: function() {
-    this.bg = this.add.tileSprite(gameWidth / 2, gameHeight / 2, gameWidth, gameHeight, 'bg');
+    this.bg_rich = this.add.tileSprite(gameWidth / 2, gameHeight / 2, gameWidth, gameHeight, 'bg_rich');
     this.endPlayer = this.add.image(450, roadPosition.min + roadPosition.gap, 'endPlayer');
     this.coinIcon = this.add.image(1700, 80, 'coinIcon');
     this.coinNum = this.add.text(1750, 45, coinCount, { font: '70px Courier', fill: '#000' });
@@ -186,10 +223,10 @@ const config = {
   width: gameWidth,
   height: gameHeight,
   physics: {
-      default: 'arcade',
-      arcade: {
-          gravity: { y: 0 }
-      }
+    default: 'arcade',
+    arcade: {
+      gravity: { y: 0 }
+    }
   },
   scene: [
     gameStart,
