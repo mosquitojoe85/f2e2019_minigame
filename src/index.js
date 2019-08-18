@@ -32,11 +32,11 @@ var coinCount = 0;
 const gameStart = {
   key: 'gameStart',
   preload: function(){
-    this.load.image('bg', 'src/assets/background/bg_old.jpg');
-    this.load.svg('player', 'src/assets/player/player.svg', { width: 280 });
-    this.load.svg('coinIcon', 'src/assets/coinIcon.svg', { width: 100 });
-    this.load.image('logo', 'src/assets/logo.png');
-    this.load.image('start', 'src/assets/start.png');
+    this.load.image('bg', bg_old);
+    this.load.svg('player', player, { width: 280 });
+    this.load.svg('coinIcon', coinIcon, { width: 100 });
+    this.load.image('logo', logo);
+    this.load.image('start', start);
   },
   create: function() {
     this.bg = this.add.tileSprite(gameWidth / 2, gameHeight / 2, gameWidth, gameHeight, 'bg');
@@ -56,17 +56,17 @@ const gameStart = {
 const playGame = {
     key: 'playGame',
     preload: function(){
-      this.load.image('sky', 'src/assets/background/sky_old.png');
-      this.load.image('cloud', 'src/assets/background/cloud_old.png');
-      this.load.image('city', 'src/assets/background/city.png');
-      this.load.image('road', 'src/assets/background/road.png');
-      this.load.svg('player', 'src/assets/player/player.svg', { width: 280 });
-      this.load.svg('coin', 'src/assets/coin.svg', { width: 280 });
-      this.load.svg('stone', 'src/assets/stone.svg', { width: 280 });
-      this.load.svg('mosquito', 'src/assets/mosquito.svg', { width: 280 });
-      this.load.svg('flood', 'src/assets/flood.svg', { width: 280 });
-      this.load.svg('boom', 'src/assets/boom.svg', { width: 130 });
-      this.load.svg('coinIcon', 'src/assets/coinIcon.svg', { width: 100 });
+      this.load.image('sky', sky_old);
+      this.load.image('cloud', cloud_old);
+      this.load.image('city', city);
+      this.load.image('road', road);
+      this.load.svg('player', player, { width: 280 });
+      this.load.svg('coin', coin, { width: 280 });
+      this.load.svg('stone', stone, { width: 280 });
+      this.load.svg('mosquito', mosquito, { width: 280 });
+      this.load.svg('flood', flood, { width: 280 });
+      this.load.svg('boom', boom, { width: 130 });
+      this.load.svg('coinIcon', coinIcon, { width: 100 });
     },
     create: function(){
       this.playTimer = playTime;
@@ -168,14 +168,14 @@ const playGame = {
 const gameEnd = {
   key: 'gameEnd',
   preload: function(){
-    this.load.image('bg_rich', 'src/assets/background/bg_rich.jpg');
-    this.load.svg('endPlayer', 'src/assets/player/playerEnd.svg', { width: 290 });
-    this.load.svg('coins', 'src/assets/gameEnd/coins.svg', { width: 600 });
-    this.load.svg('lighting', 'src/assets/gameEnd/lighting.svg', { width: 290 });
-    this.load.svg('ribbon', 'src/assets/gameEnd/ribbon.svg', { width: 600 });
-    this.load.svg('warning', 'src/assets/gameEnd/warning.svg', { width: 600 });
-    this.load.image('restart', 'src/assets/restart.png');
-    this.load.svg('coinIcon', 'src/assets/coinIcon.svg', { width: 100 });
+    this.load.image('bg_rich', bg_rich);
+    this.load.svg('endPlayer', playerEnd, { width: 290 });
+    this.load.svg('coins', coins, { width: 600 });
+    this.load.svg('lighting', lighting, { width: 290 });
+    this.load.svg('ribbon', ribbon, { width: 600 });
+    this.load.svg('warning', warning, { width: 600 });
+    this.load.image('restart', restart);
+    this.load.svg('coinIcon', coinIcon, { width: 100 });
   },
   create: function() {
     this.bg_rich = this.add.tileSprite(gameWidth / 2, gameHeight / 2, gameWidth, gameHeight, 'bg_rich');
@@ -199,9 +199,9 @@ const gameEnd = {
 const gameOver = {
   key: 'gameOver',
   preload: function(){
-    this.load.image('bg', 'src/assets/background/bg_old.jpg');
-    this.load.image('restart', 'src/assets/restart.png');
-    this.load.svg('gameOver', 'src/assets/gameOver.svg', { width: 640 });
+    this.load.image('bg', bg_old);
+    this.load.image('restart', restart);
+    this.load.svg('gameOver', gameOverImg, { width: 640 });
   },
   create: function() {
     this.bg = this.add.tileSprite(gameWidth / 2, gameHeight / 2, gameWidth, gameHeight, 'bg');
